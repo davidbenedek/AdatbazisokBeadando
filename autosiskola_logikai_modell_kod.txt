@@ -1,0 +1,65 @@
+erDiagram
+    TANULÓ {
+        INT tanulo_id PK
+        VARCHAR nev
+        VARCHAR cim
+        VARCHAR telefonszam
+        DATE szuletesi_datum
+        VARCHAR email
+    }
+
+    OKTATÓ {
+        INT oktato_id PK
+        VARCHAR nev
+        VARCHAR telefonszam
+        VARCHAR email
+        DATE alkalmazas_datum
+    }
+
+    JÁRMŰ {
+        VARCHAR rendszam PK
+        VARCHAR marka
+        VARCHAR modell
+        INT gyartasi_ev
+        VARCHAR tipus
+    }
+
+    TANFOLYAM {
+        INT tanfolyam_id PK
+        VARCHAR nev
+        DECIMAL ar
+        INT orak_szama
+    }
+
+    ÓRA {
+        INT ora_id PK
+        INT tanulo_id FK
+        INT oktato_id FK
+        VARCHAR rendszam FK
+        DATE datum
+        TIME kezdes_ido
+        TIME befejezes_ido
+    }
+
+    VIZSGA {
+        INT vizsga_id PK
+        INT tanulo_id FK
+        VARCHAR tipus
+        DATE datum
+        BOOLEAN sikeres
+    }
+
+    TANULÓ_TANFOLYAM {
+        INT tanulo_tanfolyam_id PK
+        INT tanulo_id FK
+        INT tanfolyam_id FK
+        DATE beiratkozas_datum
+        VARCHAR statusz
+    }
+
+    TANULÓ ||--o{ ÓRA : részt_vesz
+    OKTATÓ ||--o{ ÓRA : oktat
+    JÁRMŰ ||--o{ ÓRA : használatban
+    TANULÓ ||--o{ VIZSGA : tesz
+    TANULÓ ||--o{ TANULÓ_TANFOLYAM : beiratkozott
+    TANFOLYAM ||--o{ TANULÓ_TANFOLYAM : tartalmaz
